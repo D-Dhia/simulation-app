@@ -5,59 +5,59 @@ import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 
-
 # Mean values from the article (group1 - group5)
-LIST_FREQ_FEMALE= [1.4, 2.0, 1.6, 1.6, 2.2, 2.4, 2.2, 3.8, 3.2, 3.0, 2.4, 3.4,
-                   5.0, 3.4, 4.2, 4.2, 4.4, 3.8, 5.0, 3.2, 3.0, 4.6, 3.8, 2.4,
-                   4.2, 2.8, 2.4, 4.0, 2.4, 2.4, 1.8, 1.2, 1.2, 3.4, 1.0, 0.8,
-                   1.8, 0.4, 0.6, 0.4, 0.8, 1.2, 0.8, 0.6, 1.0, 1.4, 0.6, 1.4,
-                   0.4, 0.2, 0.2, 0.2, 0.6, 0.4, 1.0, 0.2, 0.0, 0.6, 0.2, 0.8,
-                   0.4, 0.2, 0.2, 0.2, 0.4, 0.0, 0.4, 0.2, 0.0, 0.4, 0.0, 0.2,
-                   0.2, 0.0, 0.0, 0.0, 0.0, 0.4, 0.2, 0.0, 0.2, 0.0, 0.0, 0.0,
-                   0.2, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.6, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0, 0.2,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                   0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+LIST_FREQ_FEMALE = [1.4, 2.0, 1.6, 1.6, 2.2, 2.4, 2.2, 3.8, 3.2, 3.0, 2.4, 3.4,
+                    5.0, 3.4, 4.2, 4.2, 4.4, 3.8, 5.0, 3.2, 3.0, 4.6, 3.8, 2.4,
+                    4.2, 2.8, 2.4, 4.0, 2.4, 2.4, 1.8, 1.2, 1.2, 3.4, 1.0, 0.8,
+                    1.8, 0.4, 0.6, 0.4, 0.8, 1.2, 0.8, 0.6, 1.0, 1.4, 0.6, 1.4,
+                    0.4, 0.2, 0.2, 0.2, 0.6, 0.4, 1.0, 0.2, 0.0, 0.6, 0.2, 0.8,
+                    0.4, 0.2, 0.2, 0.2, 0.4, 0.0, 0.4, 0.2, 0.0, 0.4, 0.0, 0.2,
+                    0.2, 0.0, 0.0, 0.0, 0.0, 0.4, 0.2, 0.0, 0.2, 0.0, 0.0, 0.0,
+                    0.2, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.6, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0, 0.2,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 LIST_FREQ_MALE = [0.8, 0.2, 0.6, 1.0, 0.8, 0.2, 2.2, 1.2, 2.2, 1.2, 1.2, 2.0,
-                 2.0, 2.6, 2.2, 2.0, 2.6, 1.0, 1.6, 1.2, 2.8, 1.8, 1.4, 1.6,
-                 1.0, 1.8, 2.4, 1.2, 2.0, 1.4, 1.0, 0.8, 1.2, 1.4, 0.6, 0.2,
-                 0.8, 0.6, 1.2, 0.6, 0.4, 0.4, 1.0, 0.8, 0.4, 0.2, 0.8, 0.2,
-                 0.2, 0.6, 0.0, 0.4, 0.6, 0.2, 0.4, 0.4, 0.0, 0.4, 0.0, 0.0,
-                 0.2, 0.2, 0.2, 0.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.2, 0.0, 0.0, 0.4, 0.0, 0.2, 0.0, 0.2, 0.2, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                  2.0, 2.6, 2.2, 2.0, 2.6, 1.0, 1.6, 1.2, 2.8, 1.8, 1.4, 1.6,
+                  1.0, 1.8, 2.4, 1.2, 2.0, 1.4, 1.0, 0.8, 1.2, 1.4, 0.6, 0.2,
+                  0.8, 0.6, 1.2, 0.6, 0.4, 0.4, 1.0, 0.8, 0.4, 0.2, 0.8, 0.2,
+                  0.2, 0.6, 0.0, 0.4, 0.6, 0.2, 0.4, 0.4, 0.0, 0.4, 0.0, 0.0,
+                  0.2, 0.2, 0.2, 0.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.2, 0.0, 0.0, 0.4, 0.0, 0.2, 0.0, 0.2, 0.2, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 N_STREAMS = 5
 DEFAULT_RNG_SET = 12345
 LoS_SEED = 43
 
+
 class Scenario:
     def __init__(
-        self,
-        random_number_set,
-        num_beds,
-        num_single_rooms,
-        num_multi_bed_bays,
-        bay_capacity,
-        mean_interarrival_time,
-        probability_female,
-        los_seed,
-        list_freq_female,
-        list_freq_male,
+            self,
+            random_number_set,
+            num_beds,
+            num_single_rooms,
+            num_multi_bed_bays,
+            bay_capacity,
+            mean_interarrival_time,
+            probability_female,
+            los_seed,
+            list_freq_female,
+            list_freq_male,
     ):
         # resource counts
         self.num_beds = num_beds
@@ -131,7 +131,8 @@ class Patient:
 # Ward class
 class Ward:
     def __init__(
-        self, env, num_beds, num_single_rooms, num_multi_bed_bays, bay_capacity, warm_up
+            self, env, num_beds, num_single_rooms, num_multi_bed_bays, bay_capacity,
+            warm_up
     ):
         self.env = env
         self.num_beds = num_beds
@@ -181,7 +182,7 @@ class Ward:
             self.metrics["patients_admitted"] += 1
             patient.admission_time = self.env.now
             waiting_time = (
-                self.env.now - patient.arrival_time + patient.accumulated_waiting_time
+                    self.env.now - patient.arrival_time + patient.accumulated_waiting_time
             )
             self.metrics["total_waiting_time"] += waiting_time
             self.calculate_metrics()  # Recalculate metrics after changes
@@ -237,7 +238,7 @@ class Ward:
         for bay_key, bay_occupancy in self.occupancy.items():
             if bay_key.startswith("Bay_"):
                 if any(bay_occupancy) and all(
-                    p.gender == patient.gender for p in bay_occupancy if p
+                        p.gender == patient.gender for p in bay_occupancy if p
                 ):
                     try:
                         empty_index = bay_occupancy.index(None)
@@ -302,9 +303,9 @@ class Ward:
                 for bay_key, bay_occupancy in self.occupancy.items():
                     if bay_key.startswith("Bay_"):  # Only check multi-bed bays
                         if any(bay_occupancy) and all(
-                            p.gender == single_room_patient.gender
-                            for p in bay_occupancy
-                            if p
+                                p.gender == single_room_patient.gender
+                                for p in bay_occupancy
+                                if p
                         ):
                             try:
                                 empty_index = bay_occupancy.index(None)
@@ -368,7 +369,7 @@ class Ward:
             self.waiting_list.remove(patient)
             # Accumulate waiting time before removing the patient
             waiting_time = (
-                self.env.now - patient.arrival_time + patient.accumulated_waiting_time
+                    self.env.now - patient.arrival_time + patient.accumulated_waiting_time
             )
             self.metrics["total_waiting_time"] += waiting_time
             self.metrics["patients_left_waiting"] += 1  # Increment the counter
@@ -395,15 +396,17 @@ class Ward:
             # Average Waiting Time (only for patients who waited)
             if self.metrics["total_patients"] - len(self.waiting_list) > 0:
                 self.metrics["average_waiting_time"] = self.metrics[
-                    "total_waiting_time"
-                ] / (self.metrics["total_patients"] - len(self.waiting_list))
+                                                           "total_waiting_time"
+                                                       ] / (self.metrics[
+                                                                "total_patients"] - len(
+                    self.waiting_list))
             else:
                 self.metrics["average_waiting_time"] = 0
             # Average Time Spent on Ward
             if self.metrics["patients_admitted"] > 0:
                 self.metrics["average_time_spent_on_ward"] = (
-                    self.metrics["total_time_spent_on_ward"]
-                    / self.metrics["patients_admitted"]
+                        self.metrics["total_time_spent_on_ward"]
+                        / self.metrics["patients_admitted"]
                 )
             else:
                 self.metrics["average_time_spent_on_ward"] = 0
@@ -411,17 +414,17 @@ class Ward:
             # Average Number of Patients on Ward
             if self.env.now > 0:
                 self.metrics["average_number_of_patients_on_ward"] = (
-                    self.metrics["total_time_spent_on_ward"] / self.env.now
+                        self.metrics["total_time_spent_on_ward"] / self.env.now
                 )
             else:
                 self.metrics["average_number_of_patients_on_ward"] = 0
 
             # Bed Utilization (average percentage)
             total_beds = (
-                self.num_single_rooms + self.num_multi_bed_bays * self.bay_capacity
+                    self.num_single_rooms + self.num_multi_bed_bays * self.bay_capacity
             )
             self.metrics["bed_utilization"] = (
-                (total_beds - self.get_available_beds()) / total_beds * 100
+                    (total_beds - self.get_available_beds()) / total_beds * 100
             )
 
     def get_available_beds(self):
@@ -466,7 +469,7 @@ def periodic_ward_checks(env, ward, interval=1):
             ward.calculate_metrics()
             ward.metrics["queue_sizes_per_day"].append(len(ward.waiting_list))
             total_beds = (
-                ward.num_single_rooms + ward.num_multi_bed_bays * ward.bay_capacity
+                    ward.num_single_rooms + ward.num_multi_bed_bays * ward.bay_capacity
             )
             occupied_beds = total_beds - ward.get_available_beds()
             occupancy_percentage = (
@@ -474,6 +477,7 @@ def periodic_ward_checks(env, ward, interval=1):
             )
             ward.metrics["bed_occupancy_per_day"].append(occupancy_percentage)
             ward.print_ward_state()
+
 
 def single_run(scenario, sim_time, random_no_set, warm_up):
     """
@@ -516,36 +520,38 @@ def multiple_replications(scenario, sim_time, warm_up, n_reps, n_jobs=-1):
     df_results.index = np.arange(1, len(df_results) + 1)
     df_results.index.name = "rep"
     return df_results
+
+
 st.title("Hospital Ward Simulation")
-st.write("This app simulates patient flow in a hospital ward. Adjust the parameters below.")
+st.write("This app simulates patient flow in a hospital ward.")
 
 # Sidebar - Input Parameters
 st.sidebar.header("Simulation Parameters")
 
-# Ward Configuration
-num_beds = st.sidebar.number_input("Number of Beds", min_value=1, value=15)
-num_single_rooms = st.sidebar.number_input("Number of Single Rooms", min_value=0, value=2)
-num_multi_bed_bays = st.sidebar.number_input("Number of Multi-Bed Bays", min_value=0, value=3)
-bay_capacity = st.sidebar.number_input("Bay Capacity", min_value=1, value=4)
+with st.sidebar.expander("Ward Configuration", expanded=True):
+    num_beds = st.number_input("Number of Beds", min_value=1, value=20)
+    num_single_rooms = st.number_input("Number of Single Rooms", min_value=0, value=16)
+    num_multi_bed_bays = st.number_input("Number of Multi-Bed Bays", min_value=0, value=1)
+    bay_capacity = st.number_input("Bay Capacity", min_value=1, value=4)
 
-# Validation
-total_bay_beds = num_multi_bed_bays * bay_capacity
-total_required_beds = num_single_rooms + total_bay_beds
+    # Validation
+    total_bay_beds = num_multi_bed_bays * bay_capacity
+    total_required_beds = num_single_rooms + total_bay_beds
 
-if total_required_beds > num_beds:
-    st.sidebar.error(f"Error: Total required beds ({total_required_beds}) exceed the available beds ({num_beds}).")
-    st.sidebar.info("Please adjust the number of single rooms or multi-bed bays to ensure the total required beds do not exceed the available beds.")
-    st.stop()  # Stop the app if validation fails
-    
-# Patient Arrival
-mean_interarrival_time = st.sidebar.number_input("Mean Interarrival Time", min_value=0.1, value=1/0.774822517748225)
-probability_female = st.sidebar.number_input("Probability of Female Patient", min_value=0.0, max_value=1.0, value=0.661376)
+    if total_required_beds != num_beds:
+        st.error(f"Error: Total number of beds ({total_required_beds}) is not equal to available number of beds ({num_beds}).")
+        st.info("Please adjust the number of single rooms and multi-bed bays to ensure the total number of beds is equal to available beds.")
+        st.stop()  # Stop the app if validation fails
 
-# Simulation Control
-sim_time = st.sidebar.number_input("Simulation Time", min_value=1, value=1000)
-warm_up = st.sidebar.number_input("Warm-up Period", min_value=0, value=100)
-n_reps = st.sidebar.number_input("Number of Replications", min_value=1, value=93)
-MAX_WAITING_TIME = st.sidebar.number_input("Max Waiting Time", min_value=1, value=10)
+with st.sidebar.expander("Patient information", expanded=True):
+    mean_interarrival_time = st.number_input("Mean Interarrival Time", min_value=0.1, value=1 / 0.774822517748225)
+    probability_female = st.number_input("Probability of Female Patient", min_value=0.0, max_value=1.0, value=0.661376)
+    MAX_WAITING_TIME = st.number_input("Max Waiting Time", min_value=1, value=10)
+
+with st.sidebar.expander("Simulation Control", expanded=True):
+    sim_time = st.number_input("Simulation Time", min_value=1, value=1000)
+    warm_up = st.number_input("Warm-up Period", min_value=0, value=100)
+    n_reps = st.number_input("Number of Replications", min_value=1, value=93)
 
 # Run Simulation Button
 if st.sidebar.button("Run Simulation"):
@@ -572,20 +578,47 @@ if st.sidebar.button("Run Simulation"):
             scenario, sim_time=sim_time, warm_up=warm_up, n_reps=n_reps, n_jobs=-1
         )
 
-    # Display Results
-    st.header("Simulation Results")
-    st.dataframe(results_df)
+        tab1, tab2, tab3 = st.tabs([
+            "📊 Simulation Data",
+            "📈 Key Performance Indicators (KPIs)",
+            "📉 Visual Insights"
+        ])
 
-    # Display key metrics more clearly
-    st.subheader("Key Metrics (Averaged over Replications)")
-    mean_results = results_df.iloc[:, :-2].mean()
-    st.write(f"Average Waiting Time: {mean_results['average_waiting_time']:.2f}")
-    st.write(f"Average Bed Utilization: {mean_results['bed_utilization']:.2f}%")
-    st.write(f"Average Time Spent on Ward: {mean_results['average_time_spent_on_ward']:.2f}")
-    st.write(f"Average Number of Patients on Ward: {mean_results['average_number_of_patients_on_ward']:.2f}")
-    st.write(f"Total Patients Left")
+        # Inject CSS to center tab titles
+        st.markdown(
+            """
+            <style>
+            button[data-baseweb="tab"] div[data-testid="stMarkdownContainer"] p {
+                text-align: center;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    # Visualizations
-    st.subheader("Visualizations")
-    st.line_chart(results_df['average_waiting_time'])
-    st.bar_chart(mean_results[['average_bed_utilization', 'average_time_spent_on_ward']])
+        with tab1:
+            st.header("Simulation Data")
+            st.dataframe(results_df)
+
+        with tab2:
+            st.header("Key Metrics (Averaged over Replications)")
+            mean_results = results_df.iloc[:, :-2].mean()
+
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Avg Waiting Time",
+                        f"{mean_results['average_waiting_time']:.2f}")
+            col2.metric("Avg Bed Utilization", f"{mean_results['bed_utilization']:.2f}%")
+            col3.metric("Avg Time on Ward",
+                        f"{mean_results['average_time_spent_on_ward']:.2f}")
+            col4.metric("Avg Patients on Ward",
+                        f"{mean_results['average_number_of_patients_on_ward']:.2f}")
+
+        with tab3:
+            st.header("Visualizations")
+            col5, col6 = st.columns(2)
+            with col5:
+                st.line_chart(results_df['average_waiting_time'])
+                st.markdown("Average Waiting Time Over Replications")
+            with col6:
+                st.bar_chart(results_df['bed_utilization'])
+                st.markdown("Bed Utilization Over Replications")
