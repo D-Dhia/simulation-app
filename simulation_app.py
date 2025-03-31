@@ -532,7 +532,7 @@ bay_capacity = st.sidebar.number_input("Bay Capacity", min_value=1, value=4)
 total_bay_beds = num_multi_bed_bays * bay_capacity
 total_required_beds = num_single_rooms + total_bay_beds
 
-if total_required_beds != num_beds:
+if total_required_beds > num_beds:
     st.sidebar.error(f"Error: Total required beds ({total_required_beds}) exceed the available beds ({num_beds}).")
     st.sidebar.info("Please adjust the number of single rooms or multi-bed bays to ensure the total required beds do not exceed the available beds.")
     st.stop()  # Stop the app if validation fails
@@ -588,4 +588,4 @@ if st.sidebar.button("Run Simulation"):
     # Visualizations
     st.subheader("Visualizations")
     st.line_chart(results_df['average_waiting_time'])
-    st.bar_chart(results_df['bed_utilization'])
+    st.bar_chart(mean_results[['average_bed_utilization', 'average_time_spent_on_ward']])
