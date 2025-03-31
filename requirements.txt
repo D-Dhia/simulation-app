@@ -1,0 +1,6 @@
+streamlit==1.44.0
+sim-tools==0.1.0
+simpy==4.0.1
+numpy==2.2.0
+pandas==2.1.0
+joblib==1.4.2
